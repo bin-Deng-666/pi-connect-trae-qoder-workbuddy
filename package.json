@@ -1,0 +1,52 @@
+{
+  "name": "pi-connect-trae-qoder-workbuddy",
+  "version": "0.1.0",
+  "description": "Bring Trae, Qoder and WorkBuddy accounts into pi — one local gateway, one OpenAI-compatible shape, credits in the footer",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "trae",
+    "qoder",
+    "workbuddy",
+    "openai-compatible",
+    "gateway",
+    "llm"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "bin": {
+    "pi-connect": "./bin/catalog.mjs"
+  },
+  "exports": {
+    ".": "./src/gateway.mjs",
+    "./credits": "./src/credits.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "extensions",
+    "docs"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/credits/index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  },
+  "scripts": {
+    "start": "node src/gateway.mjs",
+    "catalog": "node bin/catalog.mjs",
+    "credits": "node src/credits.mjs",
+    "check:trae": "node src/providers/trae.mjs",
+    "check:qoder": "node src/providers/qoder.mjs",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "lint": "node --check src/gateway.mjs && node --check src/credits.mjs && node --check src/config.mjs && node --check src/providers/trae.mjs && node --check src/providers/qoder.mjs"
+  }
+}

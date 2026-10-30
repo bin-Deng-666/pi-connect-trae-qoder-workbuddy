@@ -1,0 +1,90 @@
+/**
+ * Example models.json fragment.
+ *
+ * COPY THIS INTO `~/.pi/agent/models.json`, then edit two things: the model list
+ * (keep only the models you actually want in the picker) and `apiKey` for
+ * WorkBuddy, which needs that account's own token.
+ *
+ * WHY `apiKey` IS A PLACEHOLDER. Pi requires a non-empty key even when the
+ * provider ignores it. Trae and Qoder are reached through the local gateway,
+ * which authenticates with the desktop clients' own credentials, so the literal
+ * `gateway-local` is fine. WorkBuddy is called directly, so its entry has to
+ * carry a real token — see `docs/providers.md`.
+ *
+ * WHY `cost` IS ZERO. All three providers bill in credits against a
+ * subscription, not in dollars per token. Leaving `cost` out entirely makes pi
+ * show no spend figure; setting it to zero explicitly keeps the field present so
+ * a later per-model price can be filled in without changing the shape.
+ */
+{
+  "$schema": "https://pi.dev/schemas/models.schema.json",
+  "providers": {
+    "trae": {
+      "name": "Trae",
+      "baseUrl": "http://127.0.0.1:8798/trae/v1",
+      "api": "openai-completions",
+      "apiKey": "gateway-local",
+      "models": [
+        {
+          "id": "glm-5.3",
+          "name": "GLM-5.3",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 1000000,
+          "maxTokens": 64000
+        }
+      ]
+    },
+    "qoder": {
+      "name": "Qoder",
+      "baseUrl": "http://127.0.0.1:8798/qoder/v1",
+      "api": "openai-completions",
+      "apiKey": "gateway-local",
+      "compat": {
+        "supportsReasoningEffort": true,
+        "thinkingFormat": "openai",
+        "maxTokensField": "max_tokens",
+        "supportsStore": false,
+        "supportsDeveloperRole": false
+      },
+      "models": [
+        {
+          "id": "GLM-5.3",
+          "name": "GLM-5.3",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 1000000,
+          "maxTokens": 32000
+        }
+      ]
+    },
+    "workbuddy": {
+      "name": "WorkBuddy",
+      "baseUrl": "https://copilot.tencent.com/v2",
+      "api": "openai-completions",
+      "apiKey": "$WORKBUDDY_TOKEN",
+      "headers": {
+        "User-Agent": "WorkBuddy/5.8.3 WorkBuddy/5.8.3 CLI/5.8.3",
+        "X-IDE-Name": "WorkBuddy",
+        "X-IDE-Type": "CLI"
+      },
+      "compat": {
+        "supportsReasoningEffort": true,
+        "thinkingFormat": "openai",
+        "supportsDeveloperRole": false,
+        "maxTokensField": "max_tokens",
+        "supportsStore": false
+      },
+      "models": [
+        {
+          "id": "glm-5.3",
+          "name": "GLM-5.3",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 1000000,
+          "maxTokens": 64000
+        }
+      ]
+    }
+  }
+}

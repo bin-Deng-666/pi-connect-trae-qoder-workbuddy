@@ -1,0 +1,29 @@
+# Logs and runtime output
+*.log
+
+# Local machine state that must never be committed:
+# generated model catalogs, credential copies, and anything a check script drops
+models.json
+trae-models.json
+examples/*.local.json
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Test / coverage
+coverage/
+*.tsbuildinfo
